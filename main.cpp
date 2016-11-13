@@ -33,6 +33,24 @@ int main()
 			t->printActiveTables();
 			t->printTableByName("table1");
 		}
+		else if(userInput == "tables")
+		{
+			t->printActiveTables();
+		}
+		else if(userInput == "asd")//TESTING ZBRISI POL
+		{
+			t->sumTables("table1", "table2fe");
+			t->resultTable->print();
+
+			t->substractTables("table1","table2fe");
+			t->resultTable->print();
+
+			t->divideTables("table1","table2fe");
+			t->resultTable->print();
+
+			t->prodTables("table1","table2fe");
+			t->resultTable->print();
+		}
 		else if(userInput == "math") // if(table == NULL) shit goes crazy
 		{
 			std::cout << "S ~ single table operations\nM ~ multiple table operations\n";
@@ -40,26 +58,45 @@ int main()
 
 			if(userInput == "S")				//seštevek, zmnožek vseh elementov
 			{
-				while(userInput != "exit")
-				{
-					std::cout << "\nSUM ~ sum,\nPROD ~ product,\nMAX ~ max element,\nMIN ~ min element\nexit ~ return to main\n";
 
+				while(true)
+				{
+					std::cout << "\nUsage: tableName operator\nSUM ~ sum,\nPROD ~ product,\nMAX ~ max element,\nMIN ~ min element\nexit ~ return to main\n";
+					std::string userInputTableName = "";
+					std::cin >> userInputTableName;
+					if(userInputTableName == "exit")
+					{
+						break;
+					}
 					std::cin >> userInput;
+
+					if(!t->tableMapContains(userInputTableName))
+					{
+						std::cout << "\nPlease select a table from the list:\n";
+						t->printActiveTables();
+						continue;
+					}
+					else if(userInput != "MAX" && userInput != "MIN" && userInput != "SUM" && userInput != "PROD")
+					{
+						std::cout << "Invalid operator.";
+					}
+
+
 					if(userInput == "MAX")
 					{
-						std::cout<<t->tableMap["table1"]->maxElement()<<std::endl;
+						std::cout<<t->tableMap[userInputTableName]->maxElement()<<std::endl;
 					}
 					else if(userInput == "MIN")
 					{
-						std::cout<<t->tableMap["table1"]->minElement()<<std::endl;
+						std::cout<<t->tableMap[userInputTableName]->minElement()<<std::endl;
 					}
 					else if(userInput == "SUM")
 					{
-						std::cout<<t->tableMap["table1"]->sumElements()<<std::endl;
+						std::cout<<t->tableMap[userInputTableName]->sumElements()<<std::endl;
 					}
 					else if(userInput == "PROD")
 					{
-						std::cout<<t->tableMap["table1"]->prodElements()<<std::endl;
+						std::cout<<t->tableMap[userInputTableName]->prodElements()<<std::endl;
 					}
 				}
 				std::cout<<std::endl;
@@ -77,7 +114,7 @@ int main()
 		}
 		else if(userInput == "help")
 		{
-			std::cout<<"init ~ initialize calculator\nmath ~ begin mathematical operations\nhelp ~ view help\nquit ~ exit the program\n\n";
+			std::cout<<"init ~ initialize calculator\nmath ~ begin mathematical operations\ntables ~ print active tables\nhelp ~ view help\nquit ~ exit the program\n\n";
 		}
 		else if(userInput == "quit")
 		{
