@@ -10,7 +10,6 @@ class Table
 
 		void print()
 		{
-			// std::cout << name << std::endl;
 			for (unsigned int i = 0; i < values.size(); ++i)
 			{
 				for (unsigned int j = 0; j < values[i].size(); ++j)
@@ -19,7 +18,6 @@ class Table
 				}
 				std::cout << std::endl;
 			}
-			std::cout << values.size();
 		}
 
 		std::string name;

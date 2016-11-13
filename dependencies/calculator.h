@@ -76,5 +76,10 @@ class Calculator
 			std::cout << std::endl;
 		}
 
+		void printTableByName(std::string tableName)
+		{
+			tableMap[tableName]->print();
+		}
+
 		Calculator(){}
 };
