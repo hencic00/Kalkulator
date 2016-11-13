@@ -5,7 +5,6 @@
 class Calculator
 {
 	private:
-		std::map<std::string ,Table*> tableMap;
 
 		char* readAsCharArray(char* fileName)
 		{
@@ -23,7 +22,10 @@ class Calculator
 
 
 	public:
-		void parseFile(char* csv_fileName)
+		std::map<std::string ,Table*> tableMap; //DODAJ: getMetoda
+		Table* result = NULL;
+
+		void parseFile(char* csv_fileName) //preberi datoteko kot char in jo shrani v Table.values <- 2D vector<int>
 		{
 			char* content = readAsCharArray(csv_fileName);
 			char* parsedContent = strtok (content,",\n");
