@@ -23,8 +23,13 @@ class Calculator
 
 	public:
 		std::map<std::string ,Table*> tableMap; //DODAJ: getMetoda
-		Table* result = NULL;
+		Table* resultTable = NULL;
 
+		Calculator(){}
+		~Calculator()
+		{
+			//dodaj loop skozi map in deletaj posamezne vectorje
+		}
 		void parseFile(char* csv_fileName) //preberi datoteko kot char in jo shrani v Table.values <- 2D vector<int>
 		{
 			char* content = readAsCharArray(csv_fileName);
@@ -84,5 +89,85 @@ class Calculator
 			tableMap[tableName]->print();
 		}
 
-		Calculator(){}
+		bool tableMapContains(std::string tableMapKey) //preverimo če tableMap vsebuje key
+		{
+			std::map<std::string,Table*>::iterator it = tableMap.find(tableMapKey);
+			return (it == tableMap.end() ? false : true);
+		}
+
+		void sumTables(std::string tableName1, std::string tableName2)
+		{
+			//DODAJ preverjanje za velikost
+			delete resultTable;
+			resultTable = new Table("rezultat");
+
+			for(int i = 0; i<tableMap[tableName1]->values.size(); ++i)
+			{
+				std::vector<int> v;
+				resultTable->values.push_back(v);
+				for(int j = 0; j < tableMap[tableName1]->values[i].size(); ++j)
+				{
+					resultTable->values[i].push_back(tableMap[tableName1]->values[i][j] + tableMap[tableName2]->values[i][j]);
+				}
+			}
+		}
+
+		void substractTables(std::string tableName1, std::string tableName2)
+		{
+			//DODAJ preverjanje za velikost
+			delete resultTable;
+			resultTable = new Table("rezultat");
+
+			for(int i = 0; i<tableMap[tableName1]->values.size(); ++i)
+			{
+				std::vector<int> v;
+				resultTable->values.push_back(v);
+				for(int j = 0; j < tableMap[tableName1]->values[i].size(); ++j)
+				{
+					resultTable->values[i].push_back(tableMap[tableName1]->values[i][j] - tableMap[tableName2]->values[i][j]);
+				}
+			}
+		}
+
+		void prodTables(std::string tableName1, std::string tableName2)
+		{
+			//DODAJ preverjanje za velikost
+			delete resultTable;
+			resultTable = new Table("rezultat");
+
+			for(int i = 0; i<tableMap[tableName1]->values.size(); ++i)
+			{
+				std::vector<int> v;
+				resultTable->values.push_back(v);
+				for(int j = 0; j < tableMap[tableName1]->values[i].size(); ++j)
+				{
+					resultTable->values[i].push_back(tableMap[tableName1]->values[i][j] * tableMap[tableName2]->values[i][j]);
+				}
+			}
+		}
+
+		void divideTables(std::string tableName1, std::string tableName2)
+		{
+			//DODAJ preverjanje za velikost
+			delete resultTable;
+			resultTable = new Table("rezultat");
+
+			for(int i = 0; i<tableMap[tableName1]->values.size(); ++i)
+			{
+				std::vector<int> v;
+				resultTable->values.push_back(v);
+				for(int j = 0; j < tableMap[tableName1]->values[i].size(); ++j)
+				{
+					if(tableMap[tableName2]->values[i][j] != 0)
+					{
+						resultTable->values[i].push_back(tableMap[tableName1]->values[i][j] / tableMap[tableName2]->values[i][j]);						
+					}
+					else
+					{
+						resultTable->values[i].push_back(tableMap[tableName1]->values[i][j]);
+					}
+				}
+			}
+		}
+
 };

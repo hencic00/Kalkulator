@@ -84,4 +84,6 @@ class Table
 			return prod;
 		}
 
+		
+
 };
