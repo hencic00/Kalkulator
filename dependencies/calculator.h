@@ -71,11 +71,12 @@ class Calculator
 
 		void printActiveTables()
 		{
+			std::string tableNameList = "Table list:\n";
 			for(auto iterator = tableMap.begin(); iterator != tableMap.end(); ++iterator)
 			{
-				std::cout << iterator->first << " ";
+				tableNameList += "-" + iterator->first + "\n";
 			}
-			std::cout << std::endl;
+			mvprintw(0, 0, tableNameList.c_str());
 		}
 
 		void printTableByName(std::string tableName)

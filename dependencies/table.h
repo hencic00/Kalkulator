@@ -13,14 +13,16 @@ class Table
 
 		void print()
 		{
+			std::string tableContent =  name + "\n";
 			for (unsigned int i = 0; i < values.size(); ++i)
 			{
 				for (unsigned int j = 0; j < values[i].size(); ++j)
 				{
-					std::cout << values[i][j] << " ";
+					tableContent += std::to_string(values[i][j]) + " ";
 				}
-				std::cout << std::endl;
+				tableContent += "\n";
 			}
+			mvprintw(0, 0, tableContent.c_str());
 		}
 
 		//DODAJ template <typename T> inline T const&         nareji s template?
