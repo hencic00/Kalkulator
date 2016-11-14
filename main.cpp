@@ -97,7 +97,7 @@ int main()
 
 	Calculator *t = NULL;
 	t = new Calculator();
-	t->parseFile("./tables.csv");
+	// t->parseFile("./tables.csv");
 
 	while(true)
 	{
@@ -140,10 +140,36 @@ int main()
 			{
 				parsedContent = strtok (NULL," ");
 
-				std::string maxElement = "Min Element of table " + std::string(parsedContent) + ":\n";
-				maxElement += std::to_string(t->tableMap[parsedContent]->minElement());
+				std::string minElement = "Min Element of table " + std::string(parsedContent) + ":\n";
+				minElement += std::to_string(t->tableMap[parsedContent]->minElement());
 
-				mvprintw(0, 0, maxElement.c_str());;
+				mvprintw(0, 0, minElement.c_str());;
+			}
+			else if (!strcmp(parsedContent, "sum"))
+			{
+				parsedContent = strtok (NULL," ");
+
+				std::string sumOfElements = "Sum of table " + std::string(parsedContent) + ":\n";
+				sumOfElements += std::to_string(t->tableMap[parsedContent]->sumElements());
+
+				mvprintw(0, 0, sumOfElements.c_str());;
+			}
+			else if (!strcmp(parsedContent, "prod"))
+			{
+				parsedContent = strtok (NULL," ");
+
+				std::string prodOfElements = "Prod of table " + std::string(parsedContent) + ":\n";
+				prodOfElements += std::to_string(t->tableMap[parsedContent]->prodElements());
+
+				mvprintw(0, 0, prodOfElements.c_str());;
+			}
+			else if (!strcmp(parsedContent, "load"))
+			{
+				parsedContent = strtok (NULL," ");
+				std::string info = "Loaded file " + std::string(parsedContent) + "\n";
+
+				t->parseFile(parsedContent);
+				mvprintw(0, 0, info.c_str());
 			}
 			else
 			{
