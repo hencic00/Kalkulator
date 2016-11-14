@@ -1,6 +1,8 @@
 #include <map>
+#include <fstream>
 
 #include <table.h>
+
 
 class Calculator
 {
@@ -169,5 +171,27 @@ class Calculator
 				}
 			}
 		}
+
+		void writeActiveTablesToFile(std::string fileName)
+		{
+			std::string tablesString = "";
+			for(auto iterator = tableMap.begin(); iterator != tableMap.end(); ++iterator)
+			{
+				tablesString += tableMap[iterator->first]->toString();
+			}
+			// mvprintw(0, 0, tablesString.c_str());
+
+			std::ofstream myFile;
+			myFile.open(fileName, std::ios::app);
+			myFile << tablesString;
+		}
+
+		void writeTableToFile(std::string fileName, std::string tableName)
+		{
+			std::ofstream myFile;
+			myFile.open(fileName, std::ios::app);
+			myFile << tableMap[tableName]->toString();
+		}
+
 
 };

@@ -1,4 +1,5 @@
 #pragma once
+#include <cstring>
 
 class Table
 {
@@ -82,6 +83,23 @@ class Table
 				}
 			}
 			return prod;
+		}
+
+		std::string toString()
+		{
+			std::string tableString = "table," + name + ",\n";
+
+			for(int i = 0; i < values.size(); ++i)
+			{
+				tableString += "row,";
+				for(int j = 0; j < values[i].size(); ++j)
+				{
+					tableString += std::to_string(values[i][j]) + ",";
+				}
+				tableString += "\n";
+			}
+
+			return tableString;
 		}
 
 		
