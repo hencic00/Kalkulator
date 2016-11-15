@@ -59,6 +59,138 @@ int main()
 				}
 
 			}
+
+
+			//MATH MADNESS BEGIN
+			else if (!strcmp(parsedContent, "math:"))
+			{
+				parsedContent = strtok (NULL," ");
+				
+				char* resultName = parsedContent;
+				char* readInput = NULL;
+				std::vector<char*> tableNames;
+				std::vector<char*> tableOperators;
+
+				bool parsingErrors = true;
+				bool identifier = true;
+
+				if(parsedContent != NULL) //nismo na koncu
+				{
+					//nato more bit "="
+					if(t->getNextUserInput(&parsedContent))
+					{
+						if(!strcmp(parsedContent, "="))
+						{
+
+							while(parsedContent != NULL) //preberemo userov input
+							{
+								if(identifier == true) //identifier
+								{
+									if(t->getNextUserInput(&parsedContent))
+									{
+										tableNames.push_back(parsedContent);
+										identifier = false;
+										parsingErrors = false;	
+									}
+								}
+								else	//operator
+								{
+									if(t->getNextUserInput(&parsedContent))
+									{
+										// + - * /
+										if(!strcmp(parsedContent, "+") || !strcmp(parsedContent, "-") || !strcmp(parsedContent, "*") || !strcmp(parsedContent, "/"))
+										{
+											tableOperators.push_back(parsedContent);
+											identifier=true;
+											parsingErrors=true;
+										}
+										else
+										{
+											parsingErrors = true;
+											break;
+										}
+									}
+								}
+							}
+						}
+					}	
+				}
+
+				if(parsingErrors)
+				{
+					mvprintw(0,0,"parsingErrors");
+				}
+				else
+				{
+					//pogledamo če tabele obstajajo
+					for(int i = 0; i < tableNames.size(); ++i)
+					{
+						if(t->tableMapContains(tableNames[i]) == false)
+						{
+							parsingErrors=true;
+						}
+					}
+					if(parsingErrors == true)
+					{
+						mvprintw(0, 0, "Tabela ne obstaja");
+					}
+					else
+					{
+						//ustvarimo tabelo
+						Table userResultTable = *t->tableMap[tableNames[0]];
+						userResultTable.name = resultName;
+						//bindamo jo v map
+						t->tableMap[resultName] = &userResultTable;
+
+						//izračunamo
+						for(int i = 0; i < tableOperators.size(); ++i)
+						{
+								if(!strcmp(tableOperators[i], "+"))
+								{
+									t->sumTables(resultName, tableNames[i]);
+
+									Table* calculated = new Table(*t->resultTable); //Drip drip
+									calculated->name = resultName;
+
+									// if(t->tableMap[resultName] != NULL) //raw pointer problems?
+									// {
+									// 	delete t->tableMap[resultName];
+									// }
+									t->tableMap[resultName] = calculated;
+								}
+								else if(!strcmp(tableOperators[i], "-"))
+								{
+									t->substractTables(resultName, tableNames[i]);
+
+									Table* calculated = new Table(*t->resultTable); //Drip drip
+									calculated->name = resultName;
+									t->tableMap[resultName] = calculated;
+								}
+								else if(!strcmp(tableOperators[i], "*"))
+								{
+									t->prodTables(resultName, tableNames[i]);
+
+									Table* calculated = new Table(*t->resultTable); //Drip drip
+									calculated->name = resultName;
+									t->tableMap[resultName] = calculated;
+								}
+								else if(!strcmp(tableOperators[i], "/"))
+								{
+									t->divideTables(resultName, tableNames[i]);
+
+									Table* calculated = new Table(*t->resultTable); //Drip drip
+									calculated->name = resultName;
+									t->tableMap[resultName] = calculated;
+								}
+						}
+						t->printTableByName(resultName);
+
+					}
+				}
+
+			}
+
+			//MATH MADNESS END
 			else if (!strcmp(parsedContent, "max"))
 			{
 				parsedContent = strtok (NULL," ");

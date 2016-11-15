@@ -11,6 +11,19 @@ class Table
 		{
 			name = tableName;
 		};
+		
+		Table(const Table &vhod)
+		{
+			for(int i = 0; i<vhod.values.size(); ++i)
+			{
+				std::vector<int> v;
+				values.push_back(v);
+				for(int j = 0; j < vhod.values[i].size(); ++j)
+				{
+					values[i].push_back(vhod.values[i][j]);
+				}
+			}
+		};
 
 		void print()
 		{

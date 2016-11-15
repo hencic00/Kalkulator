@@ -19,7 +19,6 @@ class Calculator
 			ifs.read(result, pos);
 
 			return result;
-
 		}
 
 
@@ -107,8 +106,11 @@ class Calculator
 			{
 				std::vector<int> v;
 				resultTable->values.push_back(v);
+
 				for(int j = 0; j < tableMap[tableName1]->values[i].size(); ++j)
 				{
+					//int dafuq = tableMap[tableName1]->values[i].size();
+
 					resultTable->values[i].push_back(tableMap[tableName1]->values[i][j] + tableMap[tableName2]->values[i][j]);
 				}
 			}
@@ -191,6 +193,16 @@ class Calculator
 			std::ofstream myFile;
 			myFile.open(fileName, std::ios::app);
 			myFile << tableMap[tableName]->toString();
+		}
+
+		inline bool getNextUserInput(char** parsedContent)
+		{
+			*parsedContent = strtok (NULL," ");
+
+			if(*parsedContent != NULL){
+				return true;
+			}
+			return false;
 		}
 
 
